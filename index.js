@@ -4,6 +4,7 @@ const auth = require('basic-auth')
 const express = require('express');
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken');
+const PORT =  process.env.PORT || 5000
 
 if (process.env.environment === "local" ) {
   const dotenv = require('dotenv')
@@ -77,29 +78,9 @@ app.get('/test', async function(req, res) {
      
 });
 
-app.listen(5000)
+app.listen(PORT)
 
-const flow = async () => {
-  db.getAdminUsers().then(async (res) => {
-    console.log(res);
-  }).then(() => {
-    db.closeConnection()
-  }).catch((err) => {
-    db.closeConnection()
-    throw err
-  })
-}
 
-const flowAsync = async () => {
-  try {
-    let users = await db.getAdminUsers()
-    console.log(users);
-    db.closeConnection()
-  } catch (err) {
-    db.closeConnection()
-    console.error(err)
-  }
-}
 
 
 
