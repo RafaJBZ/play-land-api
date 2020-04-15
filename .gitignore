@@ -1,0 +1,3 @@
+.env
+ca-certificate.crt
+/node_modules
