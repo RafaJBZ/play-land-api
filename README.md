@@ -8,16 +8,13 @@
 ### HTTP request Login
 #### 
 ```
- .post 
- https://play-land.herokuapp.com/login
- 
- Requirements
-  User = name
-  Password = pass
-
- Response
-    Accomplished: Json with a Token
-    Failed: Status 500
-    Denied: Status 401
+ POST: [/login](https://play-land.herokuapp.com/login)
+    headers : {
+        "Authorization" : "Basic" <Token>
+    }
+    Token = ${login}:${password}
+    response: {
+        "token" : <Response Token>
+    }
  
 ```
