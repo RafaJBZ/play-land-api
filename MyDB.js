@@ -74,8 +74,6 @@ module.exports = class MyDB {
         })
     }
 
-    setTypeReg()
-
     closeConnection() {
         return new Promise((resolve, reject) => {
             try {
