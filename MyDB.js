@@ -45,8 +45,9 @@ module.exports = class MyDB {
         dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior){
             return new Promise((resolve, reject)=>{
                 this.connection.query(`insert into alumnos (nombre,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual
-                    ,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,enfermedadesPadecidas,GolpesPadecidos,alergias
-                    ,pediatra,habitosSueño,motricidad,habla,controlEsfinteres,independencia,agudezVisual,agudezAuditiva,deficienciasMotoras,comportamiento)
+                    ,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,
+                    enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,
+                    controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento)
                     values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(schedule)},${this.connection.escape(entryDate)}
                     ,${this.connection.escape(birthPlace)},${this.connection.escape(weigth)},${this.connection.escape(height)},${this.connection.escape(bloodType)}
                     ,${this.connection.escape(side)},${this.connection.escape(address)},${this.connection.escape(pregnancy)},${this.connection.escape(childbirth)}
@@ -58,6 +59,7 @@ module.exports = class MyDB {
                                 reject(err)
                             }
                             resolve(res)
+                            console.log(result.insertId);
                         })
             })
         }

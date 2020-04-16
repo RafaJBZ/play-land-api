@@ -84,6 +84,11 @@ app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
     if (isAuth){
       // Aqui poner funcion que hara la logica
+      console.log(req.headers)
+      let user = auth(req)
+      console.log(user)
+
+      db.setStudent(user)
       res.sendStatus(200)
     }
 });
