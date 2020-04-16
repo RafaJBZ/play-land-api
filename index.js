@@ -38,7 +38,9 @@ app.use(cors())
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/login', function(req, res) {
+  console.log(req.headers)
   let user = auth(req)
+  console.log(user)
 
   db.getAdmin(user).then((data)=> {
     if (data.length === 0){
