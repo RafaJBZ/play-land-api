@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // 3
 app.use(bodyParser.json());
 
-app.use(cors())
+app.use(cors({allowedHeaders : ['Authorization']}))
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/login', function(req, res) {
