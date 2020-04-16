@@ -4,7 +4,6 @@ const auth = require('basic-auth')
 const express = require('express');
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken');
-var cors = require('cors');
 const PORT =  process.env.PORT || 5000
 
 
@@ -98,12 +97,3 @@ app.get('/admision', async function(req, res) {
 //view all the history of registro
 
 app.listen(PORT)
-
-
-
-
-
-
-
-
-
