@@ -95,6 +95,10 @@ app.get('/admision', async function(req, res) {
 
       console.log(studentId)
       console.log(tutorId)
+
+      db.insertStudentTutor(studentId, tutorId)
+
+
       res.sendStatus(200)
     }
 });

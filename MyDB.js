@@ -86,9 +86,9 @@ module.exports = class MyDB {
         })
     }
 
-    insertStudentTutor({studentId,tutorId}){
+    insertStudentTutor(studentId,tutorId){
         return new Promise((resolve, reject)=>{
-            this.connection.query(`insert into alumnos_has_externos (idalumnos,idexternos) values (${this.connection.escape(studentId)},${this.connection.escape(tutorId)})`,(err, res)=>{
+            this.connection.query(`insert into alumnos_has_externos (alumnos_idalumnos,externos_idexternos) values (${this.connection.escape(studentId)},${this.connection.escape(tutorId)})`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
