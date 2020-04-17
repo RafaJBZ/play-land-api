@@ -23,6 +23,7 @@
 ```
  GET
  body
+ https://play-land.herokuapp.com/insertTutor
  example: 
  {
 	"student" : {
