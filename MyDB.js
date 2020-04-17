@@ -41,16 +41,16 @@ module.exports = class MyDB {
         })
     }
 
-    insertStudent({name,birthDate,schedule,entryDate,birthPlace,weigth,height,bloodType,side,address,pregnancy,childbirth,feeding,
+    insertStudent({name,birthDate,admissionTime,entryDate,birthPlace,weigth,height,bloodType,dominantSide,address,pregnancy,childbirth,feeding,
         dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior}){
             return new Promise((resolve, reject)=>{
                 this.connection.query(`insert into alumnos (nombre,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual
                     ,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,
                     enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,
                     controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento)
-                    values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(schedule)},${this.connection.escape(entryDate)}
+                    values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(admissionTime)},${this.connection.escape(entryDate)}
                     ,${this.connection.escape(birthPlace)},${this.connection.escape(weigth)},${this.connection.escape(height)},${this.connection.escape(bloodType)}
-                    ,${this.connection.escape(side)},${this.connection.escape(address)},${this.connection.escape(pregnancy)},${this.connection.escape(childbirth)}
+                    ,${this.connection.escape(dominantSide)},${this.connection.escape(address)},${this.connection.escape(pregnancy)},${this.connection.escape(childbirth)}
                     ,${this.connection.escape(feeding)},${this.connection.escape(dentition)},${this.connection.escape(diseases)},${this.connection.escape(blows)}
                     ,${this.connection.escape(allergies)},${this.connection.escape(doctor)},${this.connection.escape(sleepHabits)},${this.connection.escape(motorSkill)}
                     ,${this.connection.escape(language)},${this.connection.escape(sphinter)},${this.connection.escape(selfSufficiency)},${this.connection.escape(visual)}
@@ -63,6 +63,17 @@ module.exports = class MyDB {
             })
         }
     
+    getIdStudents({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`select idalumnos from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }    
+
     insertTutor({name,address,phone,age,profession,work}){
         return new Promise((resolve, reject)=>{
             this.connection.query(`insert into externos (nombre,direccion,telefono,edad,profesion,lugarTrabajo) values (${this.connection.escape(name)},${this.connection.escape(address)}
@@ -75,6 +86,16 @@ module.exports = class MyDB {
         })
     }
 
+    insertStudentTutor({studentId,tutorId}){
+        return new Promise((resolve, reject)=>{
+            this.connection.query(`insert into alumnos_has_externos (idalumnos,idexternos) values (${this.connection.escape(studentId)},${this.connection.escape(tutorId)})`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
 
 
     closeConnection() {
