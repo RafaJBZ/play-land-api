@@ -28,10 +28,11 @@ let db = new MyDB(dbMetadata)
 
 var app = express();
 
+app.use(bodyParser.json());
 // 2
 app.use(bodyParser.urlencoded({ extended: true }));
 // 3
-app.use(bodyParser.json());
+
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -82,13 +83,17 @@ function authorize(req,res){
 
 app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
+    console.log(req.body)
     if (isAuth){
       // Aqui poner funcion que hara la logica
-      console.log(req.headers)
-      let user = auth(req)
-      console.log(user)
-
-      db.setStudent(user)
+      const { student, tutor} = req.body
+      if (student.name == undefined || tutor.name == undefined){
+        res.sendStatus(400)
+      }
+      const studentId = await db.insertStudent(student)
+      const tutorId = await db.insertTutor(tutor)
+      console.log(studentId)
+      console.log(tutorId)
       res.sendStatus(200)
     }
 });

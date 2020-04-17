@@ -41,8 +41,8 @@ module.exports = class MyDB {
         })
     }
 
-    setStudent(name,birthDate,schedule,entryDate,birthPlace,weigth,height,bloodType,side,address,pregnancy,childbirth,feeding,
-        dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior){
+    insertStudent({name,birthDate,schedule,entryDate,birthPlace,weigth,height,bloodType,side,address,pregnancy,childbirth,feeding,
+        dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior}){
             return new Promise((resolve, reject)=>{
                 this.connection.query(`insert into alumnos (nombre,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual
                     ,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,
@@ -58,23 +58,24 @@ module.exports = class MyDB {
                             if(err) {
                                 reject(err)
                             }
-                            resolve(res)
-                            console.log(result.insertId);
+                            resolve(res.insertId)
                         })
             })
         }
     
-    setTutor(name,address,phone,age,profession,work){
+    insertTutor({name,address,phone,age,profession,work}){
         return new Promise((resolve, reject)=>{
             this.connection.query(`insert into externos (nombre,direccion,telefono,edad,profesion,lugarTrabajo) values (${this.connection.escape(name)},${this.connection.escape(address)}
             ,${this.connection.escape(phone)},${this.connection.escape(age)},${this.connection.escape(profession)},${this.connection.escape(work)})`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
-                resolve(res)
+                resolve(res.insertId)
             })
         })
     }
+
+
 
     closeConnection() {
         return new Promise((resolve, reject) => {
