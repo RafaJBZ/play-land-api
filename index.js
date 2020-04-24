@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method, Access-Control-Allow-Origin');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
@@ -85,7 +85,7 @@ app.get('/admision', async function(req, res) {
     console.log(req.body)
     if (isAuth){
       const { student, tutor} = req.body
-      if (student.name == undefined || tutor.name == undefined){
+      if (student.name === undefined || tutor.name === undefined){
         res.sendStatus(400)
       }
       const studentId = await db.insertStudent(student)
@@ -123,7 +123,6 @@ app.get('/insertMedicamento', async function(req, res) {
   let isAuth = await authorize(req,res)
   console.log(req.body)
   if (isAuth){
-    // Aqui poner funcion que hara la logica
     const { student, drug} = req.body
     if (student.name == undefined || drug.name == undefined){
       res.sendStatus(400)
@@ -154,10 +153,12 @@ app.get('/insertRegistro',async function(req, res){
     res.sendStatus(200)
   }
 })
+//datos alumno
+//tutores por niño
+//medicinas con niño
+//entradas salidas niño
+//eliminar alumno
+// eliminar tutor
 
-//view tutor by name where we also see the history of registro in the tutor
-// view alumno by name where we also see the history of registro in the alumno and de history of medicamento in the alumno
-// view all the history of medicamento
-//view all the history of registro
 
 app.listen(PORT)

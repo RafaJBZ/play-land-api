@@ -131,9 +131,10 @@ module.exports = class MyDB {
         })
     }
     
-    insertReg({date,time,tipo}){
+    insertReg({date,time,tipo,state,hygiene,diseases,injury}){
         return new Promise((resolve, reject)=>{
-            this.connection.query(`insert into registros (fecha,hora,typeReg_idtypeReg) values (${this.connection.escape(date)},${this.connection.escape(time)},${this.connection.escape(tipo)})`,(err, res)=>{
+            this.connection.query(`insert into registros (fecha,hora,typeReg_idtypeReg,estado,higiene,enfermedad,lesion) values (${this.connection.escape(date)},${this.connection.escape(time)},${this.connection.escape(tipo)}
+            ,${this.connection.escape(state)},${this.connection.escape(hygiene)},${this.connection.escape(diseases)},${this.connection.escape(injury)})`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
