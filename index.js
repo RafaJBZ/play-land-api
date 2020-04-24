@@ -42,7 +42,6 @@ app.use((req, res, next) => {
   next();
 })
 
-// respond with "hello world" when a GET request is made to the homepage
 app.post('/login', function(req, res) {
   console.log(req.headers)
   let user = auth(req)
@@ -85,7 +84,6 @@ app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
     console.log(req.body)
     if (isAuth){
-      // Aqui poner funcion que hara la logica
       const { student, tutor} = req.body
       if (student.name == undefined || tutor.name == undefined){
         res.sendStatus(400)
@@ -107,7 +105,6 @@ app.get('/insertTutor', async function(req, res) {
   let isAuth = await authorize(req,res)
   console.log(req.body)
   if (isAuth){
-    // Aqui poner funcion que hara la logica
     const { student, tutor} = req.body
     if (student.name == undefined || tutor.name == undefined){
       res.sendStatus(400)
@@ -136,9 +133,6 @@ app.get('/insertMedicamento', async function(req, res) {
 
     db.insertStudentDrugs(studentId, drugId)
 
-    console.log(studentId)
-    console.log(drugId)
-
     res.sendStatus(200)
   }
 });
@@ -156,10 +150,6 @@ app.get('/insertRegistro',async function(req, res){
     const tutorId = await db.getIdTutor(tutor)
 
     db.insertStudentRegTutor(studentId,regId,tutorId)
-
-    console.log(regId)
-    console.log(studentId)
-    console.log(tutorId)
 
     res.sendStatus(200)
   }

@@ -63,7 +63,68 @@
 		"profession" : "profesion",
 		"work" : "lugar de trabajo"
 	}
-	
 }
- 
+```
+### HTTP request insert tutor
+#### 
+```
+ GET
+ body
+ https://play-land.herokuapp.com/insertTutor
+ example: 
+ {
+	"student" : {
+		"name" : "rafael",
+	}, 
+	"tutor": {
+		"name" : "memo",
+		"address" : "direccion",
+		"phone" : "23432434",
+		"age" : "34",
+		"profession" : "profesion",
+		"work" : "lugar de trabajo"
+	}
+}
+```
+### HTTP request insert drug
+#### 
+```
+ GET
+ body
+ https://play-land.herokuapp.com/insertMedicamento
+ example: 
+{
+	"student" : {
+		"name" : "rafael"	
+	}, 
+	"drug": {
+		"name" : "efef",
+		"date" : "0001/01/01",
+		"timeLast" : "00:00",
+		"timeNext" : "00:00"
+		
+	}	
+}
+```
+### HTTP request insert register
+#### 
+```
+ GET
+ body
+ https://play-land.herokuapp.com/insertRegistro
+ types of "tipo": 1 == in			2 == out
+ example: 
+{
+	"student" : {
+		"name" : "rafael"
+	}, 
+	"reg": {
+		"date" : "0001/01/01",
+		"time" : "00:00",
+		"tipo" : "1"
+	},
+	"tutor" : {
+		"name" : "antonio"
+	}	
+}
 ```
