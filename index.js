@@ -4,7 +4,7 @@ const auth = require('basic-auth')
 const express = require('express');
 const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken');
-const PORT =  process.env.PORT || 3000
+const PORT =  process.env.PORT || 5000
 
 
 
@@ -115,16 +115,56 @@ app.get('/insertTutor', async function(req, res) {
     const studentId = await db.getIdStudents(student)
     const tutorId = await db.insertTutor(tutor)
 
-    console.log(JSON.stringify(studentId))
-    console.log(tutorId)
+    db.insertStudentTutor(studentId, tutorId)
+
     res.sendStatus(200)
   }
 });
 
 
-//set tutor
-//set medicamento
-//set registro
+app.get('/insertMedicamento', async function(req, res) {
+  let isAuth = await authorize(req,res)
+  console.log(req.body)
+  if (isAuth){
+    // Aqui poner funcion que hara la logica
+    const { student, drug} = req.body
+    if (student.name == undefined || drug.name == undefined){
+      res.sendStatus(400)
+    }
+    const studentId = await db.getIdStudents(student)
+    const drugId = await db.insertDrugs(drug)
+
+    db.insertStudentDrugs(studentId, drugId)
+
+    console.log(studentId)
+    console.log(drugId)
+
+    res.sendStatus(200)
+  }
+});
+
+app.get('/insertRegistro',async function(req, res){
+  let isAuth = await authorize(req,res)
+  console.log(req.body)
+  if (isAuth){
+    const{reg, student, tutor} = req.body
+    if (reg.tipo == undefined || tutor.name == undefined || student.name == undefined){
+      res.sendStatus(400)
+    }
+    const regId = await db.insertReg(reg)
+    const studentId = await db.getIdStudents(student)
+    const tutorId = await db.getIdTutor(tutor)
+
+    db.insertStudentRegTutor(studentId,regId,tutorId)
+
+    console.log(regId)
+    console.log(studentId)
+    console.log(tutorId)
+
+    res.sendStatus(200)
+  }
+})
+
 //view tutor by name where we also see the history of registro in the tutor
 // view alumno by name where we also see the history of registro in the alumno and de history of medicamento in the alumno
 // view all the history of medicamento

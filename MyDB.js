@@ -69,10 +69,21 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res)
+                resolve(res[0].idalumnos)
             })
         })
-    }    
+    }
+
+    getIdTutor({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`select idexternos from externos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res[0].idexternos)
+            })
+        })
+    }
 
     insertTutor({name,address,phone,age,profession,work}){
         return new Promise((resolve, reject)=>{
@@ -97,6 +108,53 @@ module.exports = class MyDB {
         })
     }
 
+    insertDrugs({date,name,timeLast,timeNext}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`insert into medicamento (fecha,tipoMedicamento,ultimaAdministracion,proximaAministracion) values (${this.connection.escape(date)}
+            ,${this.connection.escape(name)},${this.connection.escape(timeLast)},${this.connection.escape(timeNext)})`,(err,res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res.insertId)
+            })
+        })
+    }
+
+    insertStudentDrugs(studentId,drugId){
+        return new Promise((resolve, reject)=>{
+            this.connection.query(`insert into alumnos_has_medicamento (alumnos_idalumnos,medicamento_idmedicamento) values (${this.connection.escape(studentId)},${this.connection.escape(drugId)})`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+    
+    insertReg({date,time,tipo}){
+        return new Promise((resolve, reject)=>{
+            this.connection.query(`insert into registros (fecha,hora,typeReg_idtypeReg) values (${this.connection.escape(date)},${this.connection.escape(time)},${this.connection.escape(tipo)})`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res.insertId)
+            })
+        })
+    }
+
+    insertStudentRegTutor(studentId,regId, tutorId){
+        return new Promise((resolve, reject)=>{
+            this.connection.query(`insert into alumnos_has_registros (alumnos_idalumnos,registros_idregistro,externos_idexternos) values (${this.connection.escape(studentId)}
+            ,${this.connection.escape(regId)},${this.connection.escape(tutorId)})`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+    
+
 
     closeConnection() {
         return new Promise((resolve, reject) => {
@@ -109,6 +167,4 @@ module.exports = class MyDB {
             }
         })
     }
-
-
 }
