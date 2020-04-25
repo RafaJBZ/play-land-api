@@ -88,9 +88,13 @@ app.get('/admision', async function(req, res) {
       if (req.body.length === 0 || student.name === undefined || tutor.name === undefined){
         res.sendStatus(400)
       }
-
-      const studentId = await db.insertStudent(student)
-      const tutorId = await db.insertTutor(tutor)
+      try{
+        const studentId = await db.insertStudent(student)
+        const tutorId = await db.insertTutor(tutor)
+      }catch(err){
+        res.sendStatus(500)
+      }
+      
 
       console.log(studentId)
       console.log(tutorId)
