@@ -65,7 +65,9 @@ app.post('/login', function(req, res) {
 function authorize(req,res){
   return new Promise((resolve, reject) => {
     let valid = false
-    let token = req.headers.authorization.split(" ")[1] 
+    let token = req.headers.authorization.split(" ")
+    token = token[1] 
+    console.log(token)
     db.authToken(token).then(function (data) {
       if (data.length === 0){
         res.sendStatus(401)
@@ -81,7 +83,7 @@ function authorize(req,res){
 }
 
 app.get('/admision', async function(req, res) {
-    console.log(req.headers)
+    console.log(req.headers.authorization)
     let isAuth = await authorize(req,res)
     console.log(req.body)
     if (isAuth){
