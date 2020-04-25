@@ -86,7 +86,7 @@ app.get('/admision', async function(req, res) {
     console.log(req.body)
     if (isAuth){
       const { student, tutor} = req.body
-      if (req.body == {} || student.name === undefined || tutor.name === undefined){
+      if (student === undefined || tutor === undefined){
         res.sendStatus(400)
       }
       try{
