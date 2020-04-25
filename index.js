@@ -92,17 +92,17 @@ app.post('/admision', async function(req, res) {
         
         try{
           const studentId = await db.insertStudent(student)
-          if (result === undefined){
+          if (studentId === undefined){
             throw "Server was not able to create the student"
           }
 
 
           const tutorId = await db.insertTutor(tutor)
-          if (result === undefined){
+          if (tutorId === undefined){
             throw "Server was not able to create tutor"
           }
 
-          let result = await db.insertStudentTutor(studentId, tutorId)
+          const result = await db.insertStudentTutor(studentId, tutorId)
           if (result === undefined){
             throw "Server was ot able to relate student and tutor"
           }
