@@ -87,11 +87,12 @@ app.post('/admision', async function(req, res) {
       try{
         const { student, tutor} = req.body
         if (student === undefined || tutor === undefined){
-          res.sendStatus(400)
+          res.status(400).send("Student or Tutor are undefined")
         }
         
-          const studentId = await db.insertStudent(student)
-          const tutorId = await db.insertTutor(tutor)
+        let studentId = await db.insertStudent(student)
+        console.log(studentId)
+        const tutorId = await db.insertTutor(tutor)
         
 
         console.log(studentId)  
