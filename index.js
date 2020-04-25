@@ -85,9 +85,10 @@ app.get('/admision', async function(req, res) {
     console.log(req.body)
     if (isAuth){
       const { student, tutor} = req.body
-      if (student.name === undefined || tutor.name === undefined){
+      if (req.body.length === 0 || student.name === undefined || tutor.name === undefined){
         res.sendStatus(400)
       }
+
       const studentId = await db.insertStudent(student)
       const tutorId = await db.insertTutor(tutor)
 
