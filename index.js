@@ -84,27 +84,36 @@ function authorize(req,res){
 app.post('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
     if (isAuth){
-      try{
+      
         const { student, tutor} = req.body
         if (student === undefined || tutor === undefined){
           res.status(400).send("Student or Tutor are undefined")
         }
         
-        let studentId = await db.insertStudent(student)
-        console.log(studentId)
-        const tutorId = await db.insertTutor(tutor)
+        try{
+          const studentId = await db.insertStudent(student)
+          if (result === undefined){
+            throw "Server was not able to create the student"
+          }
+
+
+          const tutorId = await db.insertTutor(tutor)
+          if (result === undefined){
+            throw "Server was not able to create tutor"
+          }
+
+          let result = await db.insertStudentTutor(studentId, tutorId)
+          if (result === undefined){
+            throw "Server was ot able to relate student and tutor"
+          }
+        }catch(err){
+          console.error(err)
+          res.status(400).send(err)
+        }
         
-
-        console.log(studentId)  
-        console.log(tutorId)
-
-        db.insertStudentTutor(studentId, tutorId)
         res.sendStatus({message: "Tas bien wey"})
-      }catch(err){
-        console.error(err)
-        res.status(500).send(err)
       }
-    }
+    
 });
 
 app.get('/insertTutor', async function(req, res) {
