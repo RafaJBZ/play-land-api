@@ -95,9 +95,7 @@ app.get('/admision', async function(req, res) {
       console.log(tutorId)
 
       db.insertStudentTutor(studentId, tutorId)
-
-      res.setHeader('Access-Control-Allow-Origin', '*')
-      res.sendStatus(200)
+      res.sendStatus({message: "Tas bien wey"})
     }
 });
 
