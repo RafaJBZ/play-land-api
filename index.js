@@ -85,6 +85,7 @@ app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
     console.log(req.headers)
     console.log(req.body)
+    console.log(req.data)
     if (isAuth){
       const { student, tutor} = req.body
       if (student === undefined || tutor === undefined){
