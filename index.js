@@ -83,27 +83,26 @@ function authorize(req,res){
 
 app.post('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
-    console.log(req.headers)
-    console.log(req.body)
-    console.log(req.data)
     if (isAuth){
-      const { student, tutor} = req.body
-      if (student === undefined || tutor === undefined){
-        res.sendStatus(400)
-      }
       try{
-        const studentId = await db.insertStudent(student)
-        const tutorId = await db.insertTutor(tutor)
+        const { student, tutor} = req.body
+        if (student === undefined || tutor === undefined){
+          res.sendStatus(400)
+        }
+        
+          const studentId = await db.insertStudent(student)
+          const tutorId = await db.insertTutor(tutor)
+        
+        
+
+        console.log(studentId)  
+        console.log(tutorId)
+
+        db.insertStudentTutor(studentId, tutorId)
+        res.sendStatus({message: "Tas bien wey"})
       }catch(err){
-        res.sendStatus(500)
+        res.status(500).send(err)
       }
-      
-
-      console.log(studentId)  
-      console.log(tutorId)
-
-      db.insertStudentTutor(studentId, tutorId)
-      res.sendStatus({message: "Tas bien wey"})
     }
 });
 
