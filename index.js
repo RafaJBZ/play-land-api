@@ -101,6 +101,7 @@ app.post('/admision', async function(req, res) {
         db.insertStudentTutor(studentId, tutorId)
         res.sendStatus({message: "Tas bien wey"})
       }catch(err){
+        console.error(err)
         res.status(500).send(err)
       }
     }
