@@ -81,6 +81,7 @@ function authorize(req,res){
 }
 
 app.get('/admision', async function(req, res) {
+    console.log(re.headers)
     let isAuth = await authorize(req,res)
     console.log(req.body)
     if (isAuth){
