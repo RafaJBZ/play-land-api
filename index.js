@@ -81,7 +81,7 @@ function authorize(req,res){
   })
 }
 
-app.get('/admision', async function(req, res) {
+app.post('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
     console.log(req.headers)
     console.log(req.body)
