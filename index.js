@@ -67,7 +67,6 @@ function authorize(req,res){
     let valid = false
     let token = req.headers.authorization.split(" ")
     token = token[1] 
-    console.log(token)
     db.authToken(token).then(function (data) {
       if (data.length === 0){
         res.sendStatus(401)
@@ -83,9 +82,8 @@ function authorize(req,res){
 }
 
 app.get('/admision', async function(req, res) {
-    console.log(req.headers.authorization)
     let isAuth = await authorize(req,res)
-    console.log(req.body)
+    console.log(req.body.length)
     if (isAuth){
       const { student, tutor} = req.body
       if (req.body.length === 0 || student.name === undefined || tutor.name === undefined){
