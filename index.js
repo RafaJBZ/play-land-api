@@ -83,10 +83,10 @@ function authorize(req,res){
 
 app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
-    console.log(req.body.length)
+    console.log(req.body)
     if (isAuth){
       const { student, tutor} = req.body
-      if (req.body.length === 0 || student.name === undefined || tutor.name === undefined){
+      if (req.body == {} || student.name === undefined || tutor.name === undefined){
         res.sendStatus(400)
       }
       try{
