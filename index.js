@@ -111,7 +111,7 @@ app.post('/admision', async function(req, res) {
           res.status(400).send(err)
         }
         
-        res.sendStatus({message: "Tas bien wey"})
+        res.json({"message" : "Student and tutor were successfully registered"})
       }
     
 });
