@@ -83,6 +83,7 @@ function authorize(req,res){
 
 app.get('/admision', async function(req, res) {
     let isAuth = await authorize(req,res)
+    console.log(req.headers)
     console.log(req.body)
     if (isAuth){
       const { student, tutor} = req.body
@@ -97,7 +98,7 @@ app.get('/admision', async function(req, res) {
       }
       
 
-      console.log(studentId)
+      console.log(studentId)  
       console.log(tutorId)
 
       db.insertStudentTutor(studentId, tutorId)
