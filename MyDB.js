@@ -90,7 +90,7 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res.insertId)
+                resolve(res)
             })
         })
     }
