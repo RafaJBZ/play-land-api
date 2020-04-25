@@ -93,7 +93,6 @@ app.post('/admision', async function(req, res) {
           const studentId = await db.insertStudent(student)
           const tutorId = await db.insertTutor(tutor)
         
-        
 
         console.log(studentId)  
         console.log(tutorId)
