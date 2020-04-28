@@ -6,6 +6,9 @@ module.exports = class MyDB {
         this.connection = mysql.createConnection({ ...dbMetadata });
     }
 
+    async curateQuery(query) {
+        return await query.replace("\n", "")
+    }
 
     getAdmin({ name, pass }) {
         return new Promise((resolve, reject) => {
@@ -51,7 +54,7 @@ module.exports = class MyDB {
                 ,${this.connection.escape(allergies)},${this.connection.escape(doctor)},${this.connection.escape(sleepHabits)},${this.connection.escape(motorSkill)}
                 ,${this.connection.escape(language)},${this.connection.escape(sphinter)},${this.connection.escape(selfSufficiency)},${this.connection.escape(visual)}
                 ,${this.connection.escape(auditory)},${this.connection.escape(motor)},${this.connection.escape(behavior)})`
-                query = query.replace("\n","")
+                
                 this.connection.query(query, (err, res)=>{
                     if(err) {
                         reject(err)
@@ -113,7 +116,7 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res.insertId)
+                resolve(res)
             })
         })
     }
@@ -136,7 +139,7 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res.insertId)
+                resolve(res)
             })
         })
     }

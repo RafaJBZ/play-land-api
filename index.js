@@ -43,9 +43,7 @@ app.use((req, res, next) => {
 })
 
 app.post('/login', function(req, res) {
-  console.log(req.headers)
   let user = auth(req)
-  console.log(user)
 
   db.getAdmin(user).then((data)=> {
     if (data.length === 0){
@@ -62,112 +60,97 @@ app.post('/login', function(req, res) {
   
 });
 
-function authorize(req,res){
-  return new Promise((resolve, reject) => {
+function authorize(req,res,next){
+  
     let valid = false
     let token = req.headers.authorization.split(" ")
     token = token[1] 
     db.authToken(token).then(function (data) {
       if (data.length === 0){
         res.sendStatus(401)
-        resolve(false) 
-      }else{
-        resolve(true)
       }
+        next()
     }).catch((err)=> {
       res.sendStatus(500)
-      resolve(false) 
+      
     })
-  })
+
 }
 
-app.post('/admision', async function(req, res) {
-    let isAuth = await authorize(req,res)
-    if (isAuth){
-      
-        const { student, tutor} = req.body
-        if (student === undefined || tutor === undefined){
-          res.status(400).send("Student or Tutor are undefined")
-        }
-        
-        try{
-          const studentId = await db.insertStudent(student)
-          if (studentId === undefined){
-            throw "Server was not able to create the student"
-          }
-
-
-          const tutorId = await db.insertTutor(tutor)
-          if (tutorId === undefined){
-            throw "Server was not able to create tutor"
-          }
-
-          const result = await db.insertStudentTutor(studentId.insertId, tutorId.insertId)
-          if (result === undefined){
-            throw "Server was ot able to relate student and tutor"
-          }
-        }catch(err){
-          console.error(err)
-          res.status(400).send(err)
-        }
-        
-        res.json({"message" : "Student and tutor were successfully registered"})
-      }
-    
-});
-
-app.get('/insertTutor', async function(req, res) {
-  let isAuth = await authorize(req,res)
-  console.log(req.body)
-  if (isAuth){
+app.post('/admision', authorize , async function(req, res) {
     const { student, tutor} = req.body
-    if (student.name == undefined || tutor.name == undefined){
-      res.sendStatus(400)
+    if (student === undefined || tutor === undefined){
+      res.status(400).send("Student or Tutor are undefined")
     }
-    const studentId = await db.getIdStudents(student)
-    const tutorId = await db.insertTutor(tutor)
-
-    db.insertStudentTutor(studentId, tutorId)
-
-    res.sendStatus(200)
-  }
+    
+    db.insertStudent(student).then((studentId)=>{
+      db.insertTutor(tutor).then((tutorId)=>{
+        db.insertStudentTutor(studentId.insertId, tutorId.insertId).then(()=>{
+          res.json({"message" : "Student and tutor were successfully registered"})
+        })
+      })
+    }).catch((err)=>{
+      console.error(err)
+      res.status(400).send(err)
+    })
 });
 
-
-app.get('/insertMedicamento', async function(req, res) {
-  let isAuth = await authorize(req,res)
-  console.log(req.body)
-  if (isAuth){
-    const { student, drug} = req.body
-    if (student.name == undefined || drug.name == undefined){
-      res.sendStatus(400)
-    }
-    const studentId = await db.getIdStudents(student)
-    const drugId = await db.insertDrugs(drug)
-
-    db.insertStudentDrugs(studentId, drugId)
-
-    res.sendStatus(200)
+app.post('/insertTutor', authorize , async function(req, res) {
+  const { student, tutor} = req.body
+  if (student === undefined || tutor === undefined){
+    res.status(400).send("Student or Tutor are undefined")
   }
+  
+  db.getIdStudents(student).then((studentId)=>{
+    db.insertTutor(tutor).then((tutorId)=>{
+      db.insertStudentTutor(studentId, tutorId.insertId).then(()=>{
+        res.json({"message" : "Tutor was successfully registered"})
+      })
+    })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
 });
 
-app.get('/insertRegistro',async function(req, res){
-  let isAuth = await authorize(req,res)
-  console.log(req.body)
-  if (isAuth){
-    const{reg, student, tutor} = req.body
-    if (reg.tipo == undefined || tutor.name == undefined || student.name == undefined){
-      res.sendStatus(400)
-    }
-    const regId = await db.insertReg(reg)
-    const studentId = await db.getIdStudents(student)
-    const tutorId = await db.getIdTutor(tutor)
-
-    db.insertStudentRegTutor(studentId,regId,tutorId)
-
-    res.sendStatus(200)
+app.post('/insertMedicamento', authorize , async function(req, res) {
+  const { student, drug} = req.body
+  if (student === undefined || drug === undefined){
+    res.status(400).send("Student or Drug are undefined")
   }
-})
+  
+  db.getIdStudents(student).then((studentId)=>{
+    db.insertDrugs(drug).then((drugId)=>{
+      db.insertStudentDrugs(studentId, drugId.insertId).then(()=>{
+        res.json({"message" : "drug was successfully registered"})
+      })
+    })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+});
+
+app.post('/insertRegistro', authorize , async function(req, res) {
+  const { student, reg, tutor} = req.body
+  if (student === undefined || reg === undefined || tutor === undefined){
+    res.status(400).send("Student, Tutor or Reg are undefined")
+  }
+  
+  db.getIdStudents(student).then((studentId)=>{
+    db.insertReg(reg).then((regId)=>{
+      db.getIdTutor(tutor).then((tutorId)=>{
+        db.insertStudentRegTutor(studentId, regId.insertId, tutorId).then(()=>{
+          res.json({"message" : "Successfully registered"})
+        })
+      })
+    })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+});
+
 //datos alumno
 //tutores por niño
 //medicinas con niño

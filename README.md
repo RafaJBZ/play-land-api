@@ -21,7 +21,7 @@
 ### HTTP request admission
 #### 
 ```
- GET
+ POST
  body
  https://play-land.herokuapp.com/admision
  example: 
@@ -68,7 +68,7 @@
 ### HTTP request insert tutor
 #### 
 ```
- GET
+ POST
  body
  https://play-land.herokuapp.com/insertTutor
  example: 
@@ -89,7 +89,7 @@
 ### HTTP request insert drug
 #### 
 ```
- GET
+ POST
  body
  https://play-land.herokuapp.com/insertMedicamento
  example: 
@@ -109,7 +109,7 @@
 ### HTTP request insert register
 #### 
 ```
- GET
+ POST
  body
  https://play-land.herokuapp.com/insertRegistro
  types of "tipo": 1 == in			2 == out
