@@ -103,7 +103,7 @@ app.post('/insertTutor', authorize , async function(req, res) {
   
   db.getIdStudents(student).then((studentId)=>{
     db.insertTutor(tutor).then((tutorId)=>{
-      db.insertStudentTutor(studentId, tutorId.insertId).then(()=>{
+      db.insertStudentTutor(studentId[0].idalumnos, tutorId.insertId).then(()=>{
         res.json({"message" : "Tutor was successfully registered"})
       })
     })
