@@ -70,7 +70,7 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res)
+                resolve(res[0].idalumnos)
             })
         })
     }
