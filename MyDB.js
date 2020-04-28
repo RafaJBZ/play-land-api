@@ -70,7 +70,7 @@ module.exports = class MyDB {
                 if(err){
                     reject(err)
                 }
-                resolve(res[0].idalumnos)
+                resolve(res)
             })
         })
     }
@@ -156,6 +156,38 @@ module.exports = class MyDB {
         })
     }
     
+    getStudent({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`select * from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    getStudents(){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`select nombre from alumnos`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    getStudentTutor({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`select * from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
 
 
     closeConnection() {
