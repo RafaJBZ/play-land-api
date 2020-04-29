@@ -180,17 +180,41 @@ app.post('/getAlumnos', authorize , async function(req, res){
 
 
 app.post('/getTutor', authorize , async function(req, res){
-  const {student, tutor} = req.body
-  if(student === undefined || tutor === undefined){
-    res.status(400).send("Student or tutor are undefined")
+  const {student} = req.body
+  if(student === undefined){
+    res.status(400).send("Student is undefined")
   }
 
-  db.getIdStudents(student).then((studentId)=>{
-    db.getIdTutor(tutor).then((tutorId)=>{
-      db.insertStudentTutor(studentId, tutorId.insertId).then(()=>{
-        res.json({"message" : "Tutor was successfully registered"})
-      })
-    })
+  db.getStudentTutor(student).then((tutorInfo)=>{
+    res.json({"message" : tutorInfo })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+})
+
+app.post('/getDrugs', authorize , async function(req, res){
+  const {student} = req.body
+  if(student === undefined){
+    res.status(400).send("Student is undefined")
+  }
+  
+  db.getStudentDrug(student).then((drugInfo)=>{
+    res.json({"message" : drugInfo})
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+})
+
+app.post('/getRegistro', authorize , async function(req, res){
+  const {student} = req.body
+  if(student === undefined){
+    res.status(400).send("Student is undefined")
+  }
+  
+  db.getStudentRegTutor(student).then((regInfo)=>{
+    res.json({"message" : regInfo})
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
@@ -198,11 +222,6 @@ app.post('/getTutor', authorize , async function(req, res){
 })
 
 
-
-
-//tutores por niño
-//medicinas con niño
-//entradas salidas niño
 //eliminar alumno
 // eliminar tutor
 

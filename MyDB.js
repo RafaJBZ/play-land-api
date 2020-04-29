@@ -47,7 +47,7 @@ module.exports = class MyDB {
     insertStudent({name,birthDate,admissionTime,entryDate,birthPlace,weigth,height,bloodType,dominantSide,address,pregnancy,childbirth,feeding,
         dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior}){
             return new Promise((resolve, reject)=>{
-                let query = `insert into alumnos (nombre,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento) values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(admissionTime)},${this.connection.escape(entryDate)}
+                let query = `insert into alumnos (nombreAlumnos,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento) values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(admissionTime)},${this.connection.escape(entryDate)}
                 ,${this.connection.escape(birthPlace)},${this.connection.escape(weigth)},${this.connection.escape(height)},${this.connection.escape(bloodType)}
                 ,${this.connection.escape(dominantSide)},${this.connection.escape(address)},${this.connection.escape(pregnancy)},${this.connection.escape(childbirth)}
                 ,${this.connection.escape(feeding)},${this.connection.escape(dentition)},${this.connection.escape(diseases)},${this.connection.escape(blows)}
@@ -66,7 +66,7 @@ module.exports = class MyDB {
     
     getIdStudents({name}){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select idalumnos from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+            this.connection.query(`select idalumnos from alumnos where nombreAlumnos=${this.connection.escape(name)}`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -77,7 +77,7 @@ module.exports = class MyDB {
 
     getIdTutor({name}){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select idexternos from externos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+            this.connection.query(`select idexternos from externos where nombreExternos=${this.connection.escape(name)}`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -88,7 +88,7 @@ module.exports = class MyDB {
 
     insertTutor({name,address,phone,age,profession,work}){
         return new Promise((resolve, reject)=>{
-            this.connection.query(`insert into externos (nombre,direccion,telefono,edad,profesion,lugarTrabajo) values (${this.connection.escape(name)},${this.connection.escape(address)}
+            this.connection.query(`insert into externos (nombreExternos,direccion,telefono,edad,profesion,lugarTrabajo) values (${this.connection.escape(name)},${this.connection.escape(address)}
             ,${this.connection.escape(phone)},${this.connection.escape(age)},${this.connection.escape(profession)},${this.connection.escape(work)})`,(err, res)=>{
                 if(err){
                     reject(err)
@@ -158,7 +158,7 @@ module.exports = class MyDB {
     
     getStudent({name}){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select * from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+            this.connection.query(`select * from alumnos where nombreAlumnos=${this.connection.escape(name)}`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -169,7 +169,7 @@ module.exports = class MyDB {
 
     getStudents(){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select nombre from alumnos`,(err, res)=>{
+            this.connection.query(`select nombreAlumnos from alumnos`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -180,7 +180,48 @@ module.exports = class MyDB {
 
     getStudentTutor({name}){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select * from alumnos where nombre=${this.connection.escape(name)}`,(err, res)=>{
+            this.connection.query(`SELECT e.nombreExternos, e.direccion, e.telefono, e.edad, e.profesion, e.lugarTrabajo FROM mydb.alumnos_has_externos ah
+            join mydb.externos e
+            on ah.externos_idexternos = e.idexternos
+            join mydb.alumnos a
+            on ah.alumnos_idalumnos = a.idalumnos
+            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    getStudentDrug({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`SELECT m.fecha, m.tipoMedicamento, m.ultimaAdministracion, m.proximaAministracion FROM mydb.alumnos_has_medicamento ah
+            join mydb.medicamento m
+            on ah.medicamento_idmedicamento = m.idmedicamento
+            join mydb.alumnos a
+            on ah.alumnos_idalumnos = a.idalumnos
+            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    getStudentRegTutor({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`SELECT a.nombreAlumnos, e.nombreExternos, r.fecha, r.hora, t.tipo, r.estado, r.higiene, r.enfermedad, r.lesion FROM mydb.alumnos_has_registros ah
+            join mydb.externos e
+            on ah.externos_idexternos = e.idexternos
+            join mydb.alumnos a
+            on ah.alumnos_idalumnos = a.idalumnos
+            join mydb.registros r
+            on ah.registros_idregistro = r.idregistro
+            join mydb.typeReg t
+            on r.typeReg_idtypeReg = t.idtypeReg
+            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
