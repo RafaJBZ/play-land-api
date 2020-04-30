@@ -129,15 +129,21 @@ response:
 {
 	"student" : {
 		"name" : "rafael"
+		
 	}, 
 	"reg": {
 		"date" : "0001/01/01",
 		"time" : "00:00",
-		"tipo" : "1"
+		"tipo" : "1",
+		"state" : "dormido",
+		"hygiene" : "limpio",
+		"diseases" : "gripa",
+		"injury" : "ninguna"
 	},
 	"tutor" : {
-		"name" : "antonio"
-	}	
+		"name" : "ruy"
+	}
+	
 }
 response:
 {
