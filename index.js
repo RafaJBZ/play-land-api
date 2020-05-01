@@ -221,6 +221,33 @@ app.post('/getRegistro', authorize , async function(req, res){
   })
 })
 
+app.post('/deleteStudent', authorize , async function(req, res){
+  const {student} = req.body
+  if(student === undefined){
+    res.status(400).send("Student is undefined")
+  }
+
+  db.deleteStudent(student).then(()=>{
+    res.json({"message" : "Deleted"})
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+})
+
+app.post('/deleteTutor', authorize , async function(req, res){
+  const {tutor} = req.body
+  if(tutor === undefined){
+    res.status(400).send("Tutor is undefined")
+  }
+
+  db.deleteTutor(tutor).then(()=>{
+    res.json({"message" : "Deleted"})
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+})
 
 //eliminar alumno
 // eliminar tutor

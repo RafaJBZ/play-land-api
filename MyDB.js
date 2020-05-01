@@ -47,13 +47,13 @@ module.exports = class MyDB {
     insertStudent({name,birthDate,admissionTime,entryDate,birthPlace,weigth,height,bloodType,dominantSide,address,pregnancy,childbirth,feeding,
         dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior}){
             return new Promise((resolve, reject)=>{
-                let query = `insert into alumnos (nombreAlumnos,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento) values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(admissionTime)},${this.connection.escape(entryDate)}
+                let query = `insert into alumnos (nombreAlumnos,fechaNacimiento,horario,fechaEntrada,lugarNacimiento,pesoActual,estaturaActual,tipoSangre,ladoDominante,direccion,desarrolloEmbarazo,parto,alimentacion,detincion,enfermedadesPadecidas,GolpesPadecidos,alegias,pediatra,habitosSueño,motricidad,habla,controlEsfinteres,independencia,agudezVisual,agudezaAuditiva,deficienciasMotoras,comportamiento,estadoAl) values (${this.connection.escape(name)},${this.connection.escape(birthDate)},${this.connection.escape(admissionTime)},${this.connection.escape(entryDate)}
                 ,${this.connection.escape(birthPlace)},${this.connection.escape(weigth)},${this.connection.escape(height)},${this.connection.escape(bloodType)}
                 ,${this.connection.escape(dominantSide)},${this.connection.escape(address)},${this.connection.escape(pregnancy)},${this.connection.escape(childbirth)}
                 ,${this.connection.escape(feeding)},${this.connection.escape(dentition)},${this.connection.escape(diseases)},${this.connection.escape(blows)}
                 ,${this.connection.escape(allergies)},${this.connection.escape(doctor)},${this.connection.escape(sleepHabits)},${this.connection.escape(motorSkill)}
                 ,${this.connection.escape(language)},${this.connection.escape(sphinter)},${this.connection.escape(selfSufficiency)},${this.connection.escape(visual)}
-                ,${this.connection.escape(auditory)},${this.connection.escape(motor)},${this.connection.escape(behavior)})`
+                ,${this.connection.escape(auditory)},${this.connection.escape(motor)},${this.connection.escape(behavior)},true)`
                 
                 this.connection.query(query, (err, res)=>{
                     if(err) {
@@ -88,8 +88,8 @@ module.exports = class MyDB {
 
     insertTutor({name,address,phone,age,profession,work}){
         return new Promise((resolve, reject)=>{
-            this.connection.query(`insert into externos (nombreExternos,direccion,telefono,edad,profesion,lugarTrabajo) values (${this.connection.escape(name)},${this.connection.escape(address)}
-            ,${this.connection.escape(phone)},${this.connection.escape(age)},${this.connection.escape(profession)},${this.connection.escape(work)})`,(err, res)=>{
+            this.connection.query(`insert into externos (nombreExternos,direccion,telefono,edad,profesion,lugarTrabajo,estadoEx) values (${this.connection.escape(name)},${this.connection.escape(address)}
+            ,${this.connection.escape(phone)},${this.connection.escape(age)},${this.connection.escape(profession)},${this.connection.escape(work)},true)`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -158,7 +158,7 @@ module.exports = class MyDB {
     
     getStudent({name}){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select * from alumnos where nombreAlumnos=${this.connection.escape(name)}`,(err, res)=>{
+            this.connection.query(`select * from alumnos where nombreAlumnos=${this.connection.escape(name)} and estadoAl=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -169,7 +169,7 @@ module.exports = class MyDB {
 
     getStudents(){
         return new Promise((resolve,reject)=>{
-            this.connection.query(`select nombreAlumnos from alumnos`,(err, res)=>{
+            this.connection.query(`select nombreAlumnos from alumnos where estadoAl=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -185,7 +185,7 @@ module.exports = class MyDB {
             on ah.externos_idexternos = e.idexternos
             join mydb.alumnos a
             on ah.alumnos_idalumnos = a.idalumnos
-            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
+            where a.nombreAlumnos =${this.connection.escape(name)} and a.estadoAl=true and e.estadoEx=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -201,7 +201,7 @@ module.exports = class MyDB {
             on ah.medicamento_idmedicamento = m.idmedicamento
             join mydb.alumnos a
             on ah.alumnos_idalumnos = a.idalumnos
-            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
+            where a.nombreAlumnos =${this.connection.escape(name)}  and a.estadoAl=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -221,7 +221,7 @@ module.exports = class MyDB {
             on ah.registros_idregistro = r.idregistro
             join mydb.typeReg t
             on r.typeReg_idtypeReg = t.idtypeReg
-            where a.nombreAlumnos =${this.connection.escape(name)}`,(err, res)=>{
+            where a.nombreAlumnos =${this.connection.escape(name)}  and a.estadoAl=true  and e.estadoEx=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -229,6 +229,29 @@ module.exports = class MyDB {
             })
         })
     }
+
+    deleteStudent({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`update alumnos set estadoAl=false where nombreAlumnos=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+    
+    deleteTutor({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`update externos set estadoEx=false where nombreExternos=${this.connection.escape(name)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
 
 
     closeConnection() {

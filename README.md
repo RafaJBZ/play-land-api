@@ -337,3 +337,39 @@ response:
     ]
 }
 ```
+### HTTP request delete student
+#### 
+```
+ POST
+ body
+ https://play-land.herokuapp.com/deleteStudent
+ req: 
+{
+	"student" : {
+		"name" : "pancho"
+		
+	}
+}
+response:
+{
+    "message": "Deleted"
+}
+```
+### HTTP request delete tutor
+#### 
+```
+ POST
+ body
+ https://play-land.herokuapp.com/deleteTutor
+ req: 
+{
+	"tutor" : {
+		"name" : "pancho"
+		
+	}
+}
+response:
+{
+    "message": "Deleted"
+}
+```
