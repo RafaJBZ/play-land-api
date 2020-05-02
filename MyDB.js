@@ -252,6 +252,38 @@ module.exports = class MyDB {
         })
     }
 
+    updateStudent({name,birthDate,admissionTime,entryDate,birthPlace,weigth,height,bloodType,dominantSide,address,pregnancy,childbirth,feeding,
+        dentition,diseases,blows,allergies,doctor,sleepHabits,motorSkill,language,sphinter,selfSufficiency,visual,auditory,motor,behavior},studentId){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`update alumnos set nombreAlumnos=${this.connection.escape(name)},fechaNacimiento=${this.connection.escape(birthDate)},horario=${this.connection.escape(admissionTime)}
+            ,fechaEntrada=${this.connection.escape(entryDate)},lugarNacimiento=${this.connection.escape(birthPlace)},pesoActual=${this.connection.escape(weigth)},estaturaActual=${this.connection.escape(height)}
+            ,tipoSangre=${this.connection.escape(bloodType)},ladoDominante=${this.connection.escape(dominantSide)},direccion=${this.connection.escape(address)},desarrolloEmbarazo=${this.connection.escape(pregnancy)}
+            ,parto=${this.connection.escape(childbirth)},alimentacion=${this.connection.escape(feeding)},detincion=${this.connection.escape(dentition)},enfermedadesPadecidas=${this.connection.escape(diseases)}
+            ,GolpesPadecidos=${this.connection.escape(blows)},alegias=${this.connection.escape(allergies)},pediatra=${this.connection.escape(doctor)},habitosSueño=${this.connection.escape(sleepHabits)}
+            ,motricidad=${this.connection.escape(motorSkill)},habla=${this.connection.escape(language)},controlEsfinteres=${this.connection.escape(sphinter)},independencia=${this.connection.escape(selfSufficiency)}
+            ,agudezVisual=${this.connection.escape(visual)},agudezaAuditiva=${this.connection.escape(auditory)},deficienciasMotoras=${this.connection.escape(motor)},comportamiento=${this.connection.escape(behavior)},estadoAl=true
+            where idalumnos=${this.connection.escape(studentId)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
+    updateTutor({name,address,phone,age,profession,work},tutorId){
+        return new Promise((resolve, reject)=>{
+            this.connection.query(`update externos set nombreExternos=${this.connection.escape(name)},direccion=${this.connection.escape(address)},telefono=${this.connection.escape(phone)}
+            ,edad=${this.connection.escape(age)},profesion=${this.connection.escape(profession)},lugarTrabajo=${this.connection.escape(work)},estadoEx=true
+            where idexternos=${this.connection.escape(tutorId)}`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
 
 
     closeConnection() {

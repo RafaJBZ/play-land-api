@@ -249,8 +249,37 @@ app.post('/deleteTutor', authorize , async function(req, res){
   })
 })
 
-//eliminar alumno
-// eliminar tutor
+app.post('/updateStudent', authorize , async function(req, res) {
+  const { UpStudent, student} = req.body
+  if (student === undefined || UpStudent === undefined){
+    res.status(400).send("Student is undefined")
+  }
+  
+  db.getIdStudents(student).then((studentId)=>{
+    db.updateStudent(UpStudent,studentId).then(()=>{
+      res.json({"message" : "Student updated"})
+    })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+});
+
+app.post('/updateTutor', authorize , async function(req, res) {
+  const { UpTutor, tutor} = req.body
+  if (tutor === undefined || UpTutor === undefined){
+    res.status(400).send("Tutor is undefined")
+  }
+  
+  db.getIdTutor(tutor).then((tutorId)=>{
+    db.updateTutor(UpTutor,tutorId).then(()=>{
+      res.json({"message" : "Tutor updated"})
+    })
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+});
 
 
 app.listen(PORT)
