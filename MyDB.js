@@ -284,8 +284,6 @@ module.exports = class MyDB {
         })
     }
 
-
-
     closeConnection() {
         return new Promise((resolve, reject) => {
             try {

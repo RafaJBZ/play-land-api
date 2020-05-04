@@ -159,7 +159,7 @@ app.post('/getAlumno', authorize , async function(req, res){
   }
 
   db.getStudent(student).then((studentInfo)=>{
-    res.json({"message" : studentInfo })
+    res.json({studentInfo})
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
@@ -171,7 +171,7 @@ app.post('/getAlumnos', authorize , async function(req, res){
   const {students} = req.body
 
   db.getStudents(students).then((studentsInfo)=>{
-    res.json({"message" : studentsInfo })
+    res.json({studentsInfo })
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
@@ -186,7 +186,7 @@ app.post('/getTutor', authorize , async function(req, res){
   }
 
   db.getStudentTutor(student).then((tutorInfo)=>{
-    res.json({"message" : tutorInfo })
+    res.json({tutorInfo })
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
@@ -200,7 +200,7 @@ app.post('/getDrugs', authorize , async function(req, res){
   }
   
   db.getStudentDrug(student).then((drugInfo)=>{
-    res.json({"message" : drugInfo})
+    res.json({drugInfo})
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
@@ -214,7 +214,7 @@ app.post('/getRegistro', authorize , async function(req, res){
   }
   
   db.getStudentRegTutor(student).then((regInfo)=>{
-    res.json({"message" : regInfo})
+    res.json({regInfo})
   }).catch((err)=>{
     console.error(err)
     res.status(400).send(err)
