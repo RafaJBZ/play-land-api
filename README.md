@@ -165,36 +165,37 @@ response:
 }
 response:
 {
-    "message": [
+    "studentInfo": [
         {
             "idalumnos": 1,
-            "nombreAlumnos": "pancho",
-            "fechaNacimiento": "2001-11-30T06:00:00.000Z",
-            "horario": "00:00:00",
-            "fechaEntrada": "2001-01-01T06:00:00.000Z",
-            "lugarNacimiento": "G",
-            "pesoActual": 12,
-            "estaturaActual": 12,
-            "tipoSangre": "O+",
-            "ladoDominante": "derecho",
-            "direccion": "sadsd",
-            "desarrolloEmbarazo": "desarrollo embarazo",
-            "parto": "parto",
-            "alimentacion": "alimentacion",
-            "detincion": "dentincion",
-            "enfermedadesPadecidas": "enfermedades padecidas",
-            "GolpesPadecidos": "golpes padecidos",
-            "alegias": "alergias",
-            "pediatra": "nombre pediatra",
-            "habitosSueño": "habitos del sueño",
-            "motricidad": "abilidades motoras",
-            "habla": "habla",
-            "controlEsfinteres": "control de esfinteres",
-            "independencia": "independencia",
-            "agudezVisual": "agudeza visual",
-            "agudezaAuditiva": "agudeza auditiva",
-            "deficienciasMotoras": "deficiencias motoras",
-            "comportamiento": "comportamiento"
+            "nombreAlumnos": "welingtonkiu",
+            "fechaNacimiento": "1111-11-10T06:36:36.000Z",
+            "horario": "11:00:00",
+            "fechaEntrada": "1111-11-10T06:36:36.000Z",
+            "lugarNacimiento": "GDL",
+            "pesoActual": 13,
+            "estaturaActual": 0.9,
+            "tipoSangre": "a",
+            "ladoDominante": "q",
+            "direccion": "s",
+            "desarrolloEmbarazo": "w",
+            "parto": "d",
+            "alimentacion": "e",
+            "detincion": "f",
+            "enfermedadesPadecidas": "r",
+            "GolpesPadecidos": "g",
+            "alegias": "t",
+            "pediatra": "h",
+            "habitosSueño": "y",
+            "motricidad": "j",
+            "habla": "u",
+            "controlEsfinteres": "k",
+            "independencia": "Pepe",
+            "agudezVisual": "l",
+            "agudezaAuditiva": "o",
+            "deficienciasMotoras": "z",
+            "comportamiento": "p",
+            "estadoAl": "1"
         }
     ]
 }
@@ -207,12 +208,12 @@ response:
  https://play-land.herokuapp.com/getAlumnos
  response:
 {
-    "message": [
+    "studentsInfo": [
         {
-            "nombreAlumnos": "pancho"
+            "nombreAlumnos": "welingtonkiu"
         },
         {
-            "nombreAlumnos": "rafael"
+            "nombreAlumnos": "primolucaxd"
         }
     ]
 }
@@ -232,25 +233,17 @@ response:
 }
 response:
 {
-    "message": [
+    "tutorInfo": [
         {
-            "nombreExternos": "santiago",
-            "direccion": "direccion",
-            "telefono": "2343243489",
-            "edad": 34,
-            "profesion": "profesion",
-            "lugarTrabajo": "lugar de trabajo"
+            "nombreExternos": "Chente",
+            "direccion": "s",
+            "telefono": "3311698146",
+            "edad": 40,
+            "profesion": "v",
+            "lugarTrabajo": "c"
         },
         {
-            "nombreExternos": "julian",
-            "direccion": "direccion",
-            "telefono": "23432434",
-            "edad": 34,
-            "profesion": "profesion",
-            "lugarTrabajo": "lugar de trabajo"
-        },
-        {
-            "nombreExternos": "antonio",
+            "nombreExternos": "soto",
             "direccion": "direccion",
             "telefono": "23432434",
             "edad": 34,
@@ -275,12 +268,12 @@ response:
 }
 response:
 {
-    "message": [
+    "drugInfo": [
         {
-            "fecha": "2001-01-01T06:00:00.000Z",
-            "tipoMedicamento": "efef",
-            "ultimaAdministracion": "00:00:00",
-            "proximaAministracion": "00:00:00"
+            "fecha": "2020-05-01T05:00:00.000Z",
+            "tipoMedicamento": "Paracetamol",
+            "ultimaAdministracion": "09:00:00",
+            "proximaAministracion": "11:00:00"
         }
     ]
 }
@@ -300,39 +293,28 @@ response:
 }
 response:
 {
-    "message": [
+    "regInfo": [
         {
-            "nombreAlumnos": "pancho",
-            "nombreExternos": "julian",
-            "fecha": "2001-01-01T06:00:00.000Z",
-            "hora": "00:00:00",
+            "nombreAlumnos": "welingtonkiu",
+            "nombreExternos": "Chente",
+            "fecha": "2020-05-01T05:00:00.000Z",
+            "hora": "12:00:00",
             "tipo": "out",
-            "estado": "dormido",
-            "higiene": "limpio",
-            "enfermedad": "gripa",
-            "lesion": "ninguna"
+            "estado": "Caminando",
+            "higiene": "Regular",
+            "enfermedad": "no",
+            "lesion": "no"
         },
         {
-            "nombreAlumnos": "pancho",
-            "nombreExternos": "santiago",
-            "fecha": "2001-01-01T06:00:00.000Z",
-            "hora": "00:00:00",
+            "nombreAlumnos": "welingtonkiu",
+            "nombreExternos": "soto",
+            "fecha": "2020-05-01T05:00:00.000Z",
+            "hora": "09:00:00",
             "tipo": "in",
-            "estado": "dormido",
-            "higiene": "limpio",
-            "enfermedad": "gripa",
-            "lesion": "ninguna"
-        },
-        {
-            "nombreAlumnos": "pancho",
-            "nombreExternos": "antonio",
-            "fecha": "2001-01-01T06:00:00.000Z",
-            "hora": "00:00:00",
-            "tipo": "in",
-            "estado": "dormido",
-            "higiene": "limpio",
-            "enfermedad": "gripa",
-            "lesion": "ninguna"
+            "estado": "Despierto",
+            "higiene": "Regular",
+            "enfermedad": "no",
+            "lesion": "no"
         }
     ]
 }
