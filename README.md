@@ -283,7 +283,7 @@ response:
 ```
  POST
  body
- https://play-land.herokuapp.com/getResgistro
+ https://play-land.herokuapp.com/getRegistro
  req: 
 {
 	"student" : {
