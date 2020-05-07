@@ -193,6 +193,21 @@ app.post('/getTutor', authorize , async function(req, res){
   })
 })
 
+
+app.post('/getNombreTutor', authorize , async function(req, res){
+  const {student} = req.body
+  if(student === undefined){
+    res.status(400).send("Student is undefined")
+  }
+
+  db.getNameTutor(student).then((tutorName)=>{
+    res.json({tutorName})
+  }).catch((err)=>{
+    console.error(err)
+    res.status(400).send(err)
+  })
+})
+
 app.post('/getDrugs', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){

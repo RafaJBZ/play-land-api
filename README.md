@@ -253,6 +253,31 @@ response:
     ]
 }
 ```
+### HTTP request get name tutor
+#### 
+```
+ POST
+ body
+ https://play-land.herokuapp.com/getNombreTutor
+ req: 
+{
+	"student" : {
+		"name" : "pancho"
+		
+	}
+}
+response:
+{
+    "tutorName": [
+        {
+            "nombreExternos": "Chente"
+        },
+        {
+            "nombreExternos": "soto"
+        }
+    ]
+}
+```
 ### HTTP request get drugs
 #### 
 ```

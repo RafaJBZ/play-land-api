@@ -194,6 +194,22 @@ module.exports = class MyDB {
         })
     }
 
+    getNameTutor({name}){
+        return new Promise((resolve,reject)=>{
+            this.connection.query(`SELECT e.nombreExternos FROM mydb.alumnos_has_externos ah
+            join mydb.externos e
+            on ah.externos_idexternos = e.idexternos
+            join mydb.alumnos a
+            on ah.alumnos_idalumnos = a.idalumnos
+            where a.nombreAlumnos =${this.connection.escape(name)} and a.estadoAl=true and e.estadoEx=true`,(err, res)=>{
+                if(err){
+                    reject(err)
+                }
+                resolve(res)
+            })
+        })
+    }
+
     getStudentDrug({name}){
         return new Promise((resolve,reject)=>{
             this.connection.query(`SELECT m.fecha, m.tipoMedicamento, m.ultimaAdministracion, m.proximaAministracion FROM mydb.alumnos_has_medicamento ah
