@@ -303,7 +303,7 @@ app.post('/updateStudent', authorize , function(req, res) {
     res.status(400).send("Student is undefined")
     return
   }
-  if(!jsonIsValid(student) || !jsonIsValid(tutor)){
+  if(!jsonIsValid(student) || !jsonIsValid(UpStudent)){
     res.status(400).send("Student or Tutor fields are empty")
     return
   }
