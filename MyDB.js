@@ -278,7 +278,7 @@ module.exports = class MyDB {
             ,GolpesPadecidos=${this.connection.escape(blows)},alegias=${this.connection.escape(allergies)},pediatra=${this.connection.escape(doctor)},habitosSueño=${this.connection.escape(sleepHabits)}
             ,motricidad=${this.connection.escape(motorSkill)},habla=${this.connection.escape(language)},controlEsfinteres=${this.connection.escape(sphinter)},independencia=${this.connection.escape(selfSufficiency)}
             ,agudezVisual=${this.connection.escape(visual)},agudezaAuditiva=${this.connection.escape(auditory)},deficienciasMotoras=${this.connection.escape(motor)},comportamiento=${this.connection.escape(behavior)},estadoAl=true
-            where idalumnos=${this.connection.escape(studentId)}`,(err, res)=>{
+            where idalumnos=${this.connection.escape(studentId)} and estadoAl=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -291,7 +291,7 @@ module.exports = class MyDB {
         return new Promise((resolve, reject)=>{
             this.connection.query(`update externos set nombreExternos=${this.connection.escape(name)},direccion=${this.connection.escape(address)},telefono=${this.connection.escape(phone)}
             ,edad=${this.connection.escape(age)},profesion=${this.connection.escape(profession)},lugarTrabajo=${this.connection.escape(work)},estadoEx=true
-            where idexternos=${this.connection.escape(tutorId)}`,(err, res)=>{
+            where idexternos=${this.connection.escape(tutorId)} and estadoEx=true`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
