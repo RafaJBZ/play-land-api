@@ -33,6 +33,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // 3
 
+function jsonIsValid(json){
+  for (let key in json){
+    if (json[key].length === 0){
+      return false
+    } 
+  }
+  return true
+}
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -77,12 +85,16 @@ function authorize(req,res,next){
 
 }
 
-app.post('/admision', authorize , async function(req, res) {
+app.post('/admision', authorize , function(req, res) {
     const { student, tutor} = req.body
     if (student === undefined || tutor === undefined){
       res.status(400).send("Student or Tutor are undefined")
+      return
     }
-    
+    if(!jsonIsValid(student) || !jsonIsValid(tutor)){
+      res.status(400).send("Student or Tutor fields are empty")
+      return
+    }
     db.insertStudent(student).then((studentId)=>{
       db.insertTutor(tutor).then((tutorId)=>{
         db.insertStudentTutor(studentId.insertId, tutorId.insertId).then(()=>{
@@ -99,6 +111,11 @@ app.post('/insertTutor', authorize , async function(req, res) {
   const { student, tutor} = req.body
   if (student === undefined || tutor === undefined){
     res.status(400).send("Student or Tutor are undefined")
+    return
+  }
+  if(!jsonIsValid(student) || !jsonIsValid(tutor)){
+    res.status(400).send("Student or Tutor fields are empty")
+    return
   }
   
   db.getIdStudents(student).then((studentId)=>{
@@ -117,6 +134,11 @@ app.post('/insertMedicamento', authorize , async function(req, res) {
   const { student, drug} = req.body
   if (student === undefined || drug === undefined){
     res.status(400).send("Student or Drug are undefined")
+    return
+  }
+  if(!jsonIsValid(student) || !jsonIsValid(drug)){
+    res.status(400).send("Student or Tutor fields are empty")
+    return
   }
   
   db.getIdStudents(student).then((studentId)=>{
@@ -136,6 +158,11 @@ app.post('/insertRegistro', authorize , async function(req, res) {
 
   if (student === undefined || reg === undefined || tutor === undefined){
     res.status(400).send("Student, Tutor or Reg are undefined")
+    return
+  }
+  if(!jsonIsValid(student) || !jsonIsValid(tutor) || !jsonIsValid(reg)){
+    res.status(400).send("Student or Tutor fields are empty")
+    return
   }
   
   db.getIdStudents(student).then((studentId)=>{
@@ -156,6 +183,7 @@ app.post('/getAlumno', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
 
   db.getStudent(student).then((studentInfo)=>{
@@ -183,6 +211,7 @@ app.post('/getTutor', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
 
   db.getStudentTutor(student).then((tutorInfo)=>{
@@ -198,6 +227,7 @@ app.post('/getNombreTutor', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
 
   db.getNameTutor(student).then((tutorName)=>{
@@ -212,6 +242,7 @@ app.post('/getDrugs', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
   
   db.getStudentDrug(student).then((drugInfo)=>{
@@ -226,6 +257,7 @@ app.post('/getRegistro', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
   
   db.getStudentRegTutor(student).then((regInfo)=>{
@@ -240,6 +272,7 @@ app.post('/deleteStudent', authorize , async function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
 
   db.deleteStudent(student).then(()=>{
@@ -254,6 +287,7 @@ app.post('/deleteTutor', authorize , async function(req, res){
   const {tutor} = req.body
   if(tutor === undefined){
     res.status(400).send("Tutor is undefined")
+    return
   }
 
   db.deleteTutor(tutor).then(()=>{
@@ -268,6 +302,7 @@ app.post('/updateStudent', authorize , async function(req, res) {
   const { UpStudent, student} = req.body
   if (student === undefined || UpStudent === undefined){
     res.status(400).send("Student is undefined")
+    return
   }
   
   db.getIdStudents(student).then((studentId)=>{
@@ -284,6 +319,7 @@ app.post('/updateTutor', authorize , async function(req, res) {
   const { UpTutor, tutor} = req.body
   if (tutor === undefined || UpTutor === undefined){
     res.status(400).send("Tutor is undefined")
+    return
   }
   
   db.getIdTutor(tutor).then((tutorId)=>{
