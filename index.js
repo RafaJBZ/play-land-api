@@ -80,7 +80,6 @@ function authorize(req,res,next){
         next()
     }).catch((err)=> {
       res.sendStatus(500)
-      return
     })
 
 }
