@@ -1,5 +1,4 @@
 const MyDB = require("./MyDB")
-const fs = require('fs')
 const auth = require('basic-auth')
 const express = require('express');
 const bodyParser = require('body-parser')
@@ -304,6 +303,10 @@ app.post('/updateStudent', authorize , function(req, res) {
     res.status(400).send("Student is undefined")
     return
   }
+  if(!jsonIsValid(student) || !jsonIsValid(tutor)){
+    res.status(400).send("Student or Tutor fields are empty")
+    return
+  }
   
   db.getIdStudents(student).then((studentId)=>{
     db.updateStudent(UpStudent,studentId).then(()=>{
@@ -319,6 +322,10 @@ app.post('/updateTutor', authorize , function(req, res) {
   const { UpTutor, tutor} = req.body
   if (tutor === undefined || UpTutor === undefined){
     res.status(400).send("Tutor is undefined")
+    return
+  }
+  if(!jsonIsValid(UpTutor) || !jsonIsValid(tutor)){
+    res.status(400).send("Student or Tutor fields are empty")
     return
   }
   
