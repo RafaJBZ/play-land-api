@@ -107,7 +107,7 @@ app.post('/admision', authorize , function(req, res) {
     })
 });
 
-app.post('/insertTutor', authorize , async function(req, res) {
+app.post('/insertTutor', authorize , function(req, res) {
   const { student, tutor} = req.body
   if (student === undefined || tutor === undefined){
     res.status(400).send("Student or Tutor are undefined")
@@ -130,7 +130,7 @@ app.post('/insertTutor', authorize , async function(req, res) {
   })
 });
 
-app.post('/insertMedicamento', authorize , async function(req, res) {
+app.post('/insertMedicamento', authorize , function(req, res) {
   const { student, drug} = req.body
   if (student === undefined || drug === undefined){
     res.status(400).send("Student or Drug are undefined")
@@ -153,7 +153,7 @@ app.post('/insertMedicamento', authorize , async function(req, res) {
   })
 });
 
-app.post('/insertRegistro', authorize , async function(req, res) {
+app.post('/insertRegistro', authorize , function(req, res) {
   const { student, reg, tutor} = req.body
 
   if (student === undefined || reg === undefined || tutor === undefined){
@@ -179,7 +179,7 @@ app.post('/insertRegistro', authorize , async function(req, res) {
   })
 });
 
-app.post('/getAlumno', authorize , async function(req, res){
+app.post('/getAlumno', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -195,7 +195,7 @@ app.post('/getAlumno', authorize , async function(req, res){
 })
 
 
-app.post('/getAlumnos', authorize , async function(req, res){
+app.post('/getAlumnos', authorize , function(req, res){
   const {students} = req.body
 
   db.getStudents(students).then((studentsInfo)=>{
@@ -207,7 +207,7 @@ app.post('/getAlumnos', authorize , async function(req, res){
 })
 
 
-app.post('/getTutor', authorize , async function(req, res){
+app.post('/getTutor', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -223,7 +223,7 @@ app.post('/getTutor', authorize , async function(req, res){
 })
 
 
-app.post('/getNombreTutor', authorize , async function(req, res){
+app.post('/getNombreTutor', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -238,7 +238,7 @@ app.post('/getNombreTutor', authorize , async function(req, res){
   })
 })
 
-app.post('/getDrugs', authorize , async function(req, res){
+app.post('/getDrugs', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -253,7 +253,7 @@ app.post('/getDrugs', authorize , async function(req, res){
   })
 })
 
-app.post('/getRegistro', authorize , async function(req, res){
+app.post('/getRegistro', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -268,7 +268,7 @@ app.post('/getRegistro', authorize , async function(req, res){
   })
 })
 
-app.post('/deleteStudent', authorize , async function(req, res){
+app.post('/deleteStudent', authorize , function(req, res){
   const {student} = req.body
   if(student === undefined){
     res.status(400).send("Student is undefined")
@@ -283,7 +283,7 @@ app.post('/deleteStudent', authorize , async function(req, res){
   })
 })
 
-app.post('/deleteTutor', authorize , async function(req, res){
+app.post('/deleteTutor', authorize , function(req, res){
   const {tutor} = req.body
   if(tutor === undefined){
     res.status(400).send("Tutor is undefined")
@@ -298,7 +298,7 @@ app.post('/deleteTutor', authorize , async function(req, res){
   })
 })
 
-app.post('/updateStudent', authorize , async function(req, res) {
+app.post('/updateStudent', authorize , function(req, res) {
   const { UpStudent, student} = req.body
   if (student === undefined || UpStudent === undefined){
     res.status(400).send("Student is undefined")
@@ -315,7 +315,7 @@ app.post('/updateStudent', authorize , async function(req, res) {
   })
 });
 
-app.post('/updateTutor', authorize , async function(req, res) {
+app.post('/updateTutor', authorize , function(req, res) {
   const { UpTutor, tutor} = req.body
   if (tutor === undefined || UpTutor === undefined){
     res.status(400).send("Tutor is undefined")
