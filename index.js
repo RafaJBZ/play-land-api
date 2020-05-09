@@ -75,11 +75,12 @@ function authorize(req,res,next){
     db.authToken(token).then(function (data) {
       if (data.length === 0){
         res.sendStatus(401)
+        return
       }
         next()
     }).catch((err)=> {
       res.sendStatus(500)
-      
+      return
     })
 
 }
