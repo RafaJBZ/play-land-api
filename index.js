@@ -79,7 +79,7 @@ function authorize(req,res,next){
 
 app.post('/admision', authorize , async function(req, res) {
     const { student, tutor} = req.body
-    if (student.name === undefined || tutor === undefined){
+    if (student === undefined || tutor === undefined){
       res.status(400).send("Student or Tutor are undefined")
     }
     
