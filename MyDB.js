@@ -86,10 +86,10 @@ module.exports = class MyDB {
         })
     }
 
-    insertTutor({name,address,phone,age,profession,work}){
+    insertTutor({name,address,phone,profession,work}){
         return new Promise((resolve, reject)=>{
-            this.connection.query(`insert into externos (nombreExternos,direccion,telefono,edad,profesion,lugarTrabajo,estadoEx) values (${this.connection.escape(name)},${this.connection.escape(address)}
-            ,${this.connection.escape(phone)},${this.connection.escape(age)},${this.connection.escape(profession)},${this.connection.escape(work)},true)`,(err, res)=>{
+            this.connection.query(`insert into externos (nombreExternos,direccion,telefono,profesion,lugarTrabajo,estadoEx) values (${this.connection.escape(name)},${this.connection.escape(address)}
+            ,${this.connection.escape(phone)},${this.connection.escape(profession)},${this.connection.escape(work)},true)`,(err, res)=>{
                 if(err){
                     reject(err)
                 }
@@ -287,10 +287,10 @@ module.exports = class MyDB {
         })
     }
 
-    updateTutor({name,address,phone,age,profession,work},tutorId){
+    updateTutor({name,address,phone,profession,work},tutorId){
         return new Promise((resolve, reject)=>{
             this.connection.query(`update externos set nombreExternos=${this.connection.escape(name)},direccion=${this.connection.escape(address)},telefono=${this.connection.escape(phone)}
-            ,edad=${this.connection.escape(age)},profesion=${this.connection.escape(profession)},lugarTrabajo=${this.connection.escape(work)}
+            ,profesion=${this.connection.escape(profession)},lugarTrabajo=${this.connection.escape(work)}
             where idexternos=${this.connection.escape(tutorId)} and estadoEx=true`,(err, res)=>{
                 if(err){
                     reject(err)
